@@ -7,38 +7,47 @@ namespace GSMC20240903.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MatriculaController : ControllerBase
     {
+        static List<Matricula> matriculas = new List<Matricula>();
         // GET: api/<MatriculaController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Matricula> Get()
         {
-            return new string[] { "value1", "value2" };
+            return matriculas;
         }
 
         // GET api/<MatriculaController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Matricula Get(int id)
         {
-            return "value";
+            var matricula = matriculas.FirstOrDefault(c => c.id == id);
+            return matricula;
         }
 
         // POST api/<MatriculaController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Matricula matricula)
         {
+            matriculas.Add(matricula);
+            return Ok();
         }
 
         // PUT api/<MatriculaController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Matricula matricula)
         {
+            var existingmatricula = matriculas.FirstOrDefault(y => y.id == id);
+            if (existingmatricula != null)
+            {
+                existingmatricula.nombre = matricula.nombre;
+                return Ok();
+            }
+            else return NotFound();
         }
 
-        // DELETE api/<MatriculaController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
+       
     }
 }

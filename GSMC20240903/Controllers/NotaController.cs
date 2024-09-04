@@ -7,38 +7,29 @@ namespace GSMC20240903.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class NotaController : ControllerBase
     {
+        static List<float> notas = new List<float>();
         // GET: api/<NotaController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        [AllowAnonymous]
+        public IEnumerable<float> Get()
         {
-            return new string[] { "value1", "value2" };
+            return notas;
         }
 
-        // GET api/<NotaController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        
 
         // POST api/<NotaController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Authorize]
+        public IActionResult Post([FromBody] float nota)
         {
+            notas.Add(nota);
+            return Ok();
         }
 
-        // PUT api/<NotaController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<NotaController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }

@@ -14,7 +14,7 @@ namespace GSMC20240903.Controllers
         [HttpPost("login")]
         public IActionResult Login(string login, string password)
         {
-            if (login == "admin" && password == "123")
+            if (login == "admin" && password == "12345")
             {
                 var claims = new List<Claim>
                 {
@@ -34,14 +34,14 @@ namespace GSMC20240903.Controllers
 
                 return Ok("Inicio sesion");
             }
-            else return Unauthorized("Incorrecto");
+            else return Unauthorized("Credenciales Incorrectas");
         }
 
         [HttpPost("logout")]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Ok("Cerrado");
+            return Ok("Cerró sesion exitoso");
         }
 
     }
